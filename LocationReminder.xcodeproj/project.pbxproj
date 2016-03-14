@@ -31,10 +31,9 @@
 		E99D622D1C97213E009E2673 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99D622C1C97213E009E2673 /* AudioToolbox.framework */; };
 		E99D622F1C97214B009E2673 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99D622E1C97214B009E2673 /* Foundation.framework */; };
 		E99D62321C973F30009E2673 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99D62311C973F30009E2673 /* MapKit.framework */; };
-		E99D623B1C975C48009E2673 /* QueueListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D623A1C975C48009E2673 /* QueueListNode.m */; };
-		E99D623E1C975C4F009E2673 /* StackListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D623D1C975C4F009E2673 /* StackListNode.m */; };
 		E99D62411C975C65009E2673 /* QueueLinkedList.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D62401C975C65009E2673 /* QueueLinkedList.m */; };
 		E99D62441C975C6C009E2673 /* StackLinkedList.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D62431C975C6C009E2673 /* StackLinkedList.m */; };
+		E99D62481C976B6C009E2673 /* ListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D62471C976B6C009E2673 /* ListNode.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,14 +65,12 @@
 		E99D622C1C97213E009E2673 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		E99D622E1C97214B009E2673 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E99D62311C973F30009E2673 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		E99D62391C975C48009E2673 /* QueueListNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueListNode.h; sourceTree = "<group>"; };
-		E99D623A1C975C48009E2673 /* QueueListNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueListNode.m; sourceTree = "<group>"; };
-		E99D623C1C975C4F009E2673 /* StackListNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StackListNode.h; sourceTree = "<group>"; };
-		E99D623D1C975C4F009E2673 /* StackListNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StackListNode.m; sourceTree = "<group>"; };
+		E99D62391C975C48009E2673 /* ListNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListNode.h; sourceTree = "<group>"; };
 		E99D623F1C975C65009E2673 /* QueueLinkedList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueLinkedList.h; sourceTree = "<group>"; };
 		E99D62401C975C65009E2673 /* QueueLinkedList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueLinkedList.m; sourceTree = "<group>"; };
 		E99D62421C975C6C009E2673 /* StackLinkedList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StackLinkedList.h; sourceTree = "<group>"; };
 		E99D62431C975C6C009E2673 /* StackLinkedList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StackLinkedList.m; sourceTree = "<group>"; };
+		E99D62471C976B6C009E2673 /* ListNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListNode.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +188,8 @@
 		E99D62381C975C11009E2673 /* Monday_CodeChallenge */ = {
 			isa = PBXGroup;
 			children = (
+				E99D62391C975C48009E2673 /* ListNode.h */,
+				E99D62471C976B6C009E2673 /* ListNode.m */,
 				E99D62461C975C83009E2673 /* QUEUE */,
 				E99D62451C975C7E009E2673 /* STACK */,
 			);
@@ -200,8 +199,6 @@
 		E99D62451C975C7E009E2673 /* STACK */ = {
 			isa = PBXGroup;
 			children = (
-				E99D623C1C975C4F009E2673 /* StackListNode.h */,
-				E99D623D1C975C4F009E2673 /* StackListNode.m */,
 				E99D62421C975C6C009E2673 /* StackLinkedList.h */,
 				E99D62431C975C6C009E2673 /* StackLinkedList.m */,
 			);
@@ -211,8 +208,6 @@
 		E99D62461C975C83009E2673 /* QUEUE */ = {
 			isa = PBXGroup;
 			children = (
-				E99D62391C975C48009E2673 /* QueueListNode.h */,
-				E99D623A1C975C48009E2673 /* QueueListNode.m */,
 				E99D623F1C975C65009E2673 /* QueueLinkedList.h */,
 				E99D62401C975C65009E2673 /* QueueLinkedList.m */,
 			);
@@ -295,12 +290,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E99D61FF1C971FFC009E2673 /* ViewController.m in Sources */,
+				E99D62481C976B6C009E2673 /* ListNode.m in Sources */,
 				E99D62441C975C6C009E2673 /* StackLinkedList.m in Sources */,
 				E99D61FC1C971FFC009E2673 /* AppDelegate.m in Sources */,
 				E99D62411C975C65009E2673 /* QueueLinkedList.m in Sources */,
 				E99D61F91C971FFC009E2673 /* main.m in Sources */,
-				E99D623E1C975C4F009E2673 /* StackListNode.m in Sources */,
-				E99D623B1C975C48009E2673 /* QueueListNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,7 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ListNode.h"
 
-@interface StackLinkedList : NSObject
+@interface StackLinkedList : NSObject //LAST IN FIRST OUT
+
+@property (strong, nonatomic) ListNode *head;
+
+- (BOOL)isEmpty;
+- (void)addKey:(NSString *)key;
+- (NSInteger)count;
+- (void)printContents;
+- (void)removeLast; //This is the only difference between a Stack and Queue
 
 @end

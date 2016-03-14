@@ -8,10 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QueueListNode : NSObject
+@interface ListNode : NSObject
 
-@property (weak, nonatomic) NSString *key;
-@property (weak, nonatomic) QueueListNode *prev;
-@property (weak, nonatomic) QueueListNode *next;
+@property (strong, nonatomic) NSString *key;
+@property (strong, nonatomic) ListNode *prev;
+@property (strong, nonatomic) ListNode *next;
 
 @end
