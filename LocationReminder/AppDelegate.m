@@ -45,7 +45,7 @@
         }
         
         if (succeeded) {
-            NSLog(@"Yay!");
+//            NSLog(@"Yay!");
             return;
         }
         
@@ -63,10 +63,10 @@
             return;
         }
         
-        for (PFObject * object in objects) {
-            PFGeoPoint * geoPoint = (PFGeoPoint *) object[@"location"];
-            NSLog(@"Geopoint of _TITLE_ is: %@", geoPoint);
-        }
+//        for (PFObject * object in objects) {
+//            PFGeoPoint * geoPoint = (PFGeoPoint *) object[@"location"];
+//            NSLog(@"Geopoint of _TITLE_ is: %@", geoPoint);
+//        }
     }];
 }
 

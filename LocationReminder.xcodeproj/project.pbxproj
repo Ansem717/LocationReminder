@@ -36,7 +36,7 @@
 		E99D62481C976B6C009E2673 /* ListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D62471C976B6C009E2673 /* ListNode.m */; };
 		E9A480A31C989B63001266F9 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A480A21C989B63001266F9 /* DetailViewController.m */; };
 		E9A480A61C98A959001266F9 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A480A51C98A959001266F9 /* LocationController.m */; };
-		E9A480AA1C98DB03001266F9 /* Anagrams.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A480A91C98DB03001266F9 /* Anagrams.m */; };
+		E9A480AF1C98F410001266F9 /* NSString+AnagramCompare.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A480AE1C98F410001266F9 /* NSString+AnagramCompare.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,8 +78,8 @@
 		E9A480A21C989B63001266F9 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		E9A480A41C98A959001266F9 /* LocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationController.h; sourceTree = "<group>"; };
 		E9A480A51C98A959001266F9 /* LocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationController.m; sourceTree = "<group>"; };
-		E9A480A81C98DB03001266F9 /* Anagrams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Anagrams.h; sourceTree = "<group>"; };
-		E9A480A91C98DB03001266F9 /* Anagrams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Anagrams.m; sourceTree = "<group>"; };
+		E9A480AD1C98F410001266F9 /* NSString+AnagramCompare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+AnagramCompare.h"; path = "../NSString+AnagramCompare.h"; sourceTree = "<group>"; };
+		E9A480AE1C98F410001266F9 /* NSString+AnagramCompare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+AnagramCompare.m"; path = "../NSString+AnagramCompare.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,8 +239,8 @@
 		E9A480AB1C98DB0F001266F9 /* Tuesday_CodeChallenge */ = {
 			isa = PBXGroup;
 			children = (
-				E9A480A81C98DB03001266F9 /* Anagrams.h */,
-				E9A480A91C98DB03001266F9 /* Anagrams.m */,
+				E9A480AD1C98F410001266F9 /* NSString+AnagramCompare.h */,
+				E9A480AE1C98F410001266F9 /* NSString+AnagramCompare.m */,
 			);
 			name = Tuesday_CodeChallenge;
 			sourceTree = "<group>";
@@ -320,11 +320,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E9A480AA1C98DB03001266F9 /* Anagrams.m in Sources */,
 				E9A480A61C98A959001266F9 /* LocationController.m in Sources */,
 				E99D61FF1C971FFC009E2673 /* ViewController.m in Sources */,
 				E99D62481C976B6C009E2673 /* ListNode.m in Sources */,
 				E99D62441C975C6C009E2673 /* StackLinkedList.m in Sources */,
+				E9A480AF1C98F410001266F9 /* NSString+AnagramCompare.m in Sources */,
 				E99D61FC1C971FFC009E2673 /* AppDelegate.m in Sources */,
 				E99D62411C975C65009E2673 /* QueueLinkedList.m in Sources */,
 				E99D61F91C971FFC009E2673 /* main.m in Sources */,

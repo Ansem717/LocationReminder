@@ -1,5 +1,5 @@
 //
-//  Anagrams.h
+//  NSString+AnagramCompare.h
 //  LocationReminder
 //
 //  Created by Andy Malik on 3/15/16.
@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Anagrams : NSObject
+@interface NSString (AnagramCompare)
+
+-(void)isAnagramWith:(NSString *)secondString;
 
 @end

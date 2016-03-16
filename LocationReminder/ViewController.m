@@ -79,8 +79,6 @@
     MKCoordinateRegion newRegion = MKCoordinateRegionMakeWithDistance(centerCoord, range, range);
     
     [self.mainMapView setRegion:newRegion animated:YES];
-    
-    NSLog(@"%@", locationTitle);
 }
 
 - (IBAction)longGesturePressed:(UILongPressGestureRecognizer *)sender {
