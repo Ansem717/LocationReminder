@@ -34,6 +34,9 @@
 		E99D62411C975C65009E2673 /* QueueLinkedList.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D62401C975C65009E2673 /* QueueLinkedList.m */; };
 		E99D62441C975C6C009E2673 /* StackLinkedList.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D62431C975C6C009E2673 /* StackLinkedList.m */; };
 		E99D62481C976B6C009E2673 /* ListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D62471C976B6C009E2673 /* ListNode.m */; };
+		E9A480A31C989B63001266F9 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A480A21C989B63001266F9 /* DetailViewController.m */; };
+		E9A480A61C98A959001266F9 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A480A51C98A959001266F9 /* LocationController.m */; };
+		E9A480AA1C98DB03001266F9 /* Anagrams.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A480A91C98DB03001266F9 /* Anagrams.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +74,12 @@
 		E99D62421C975C6C009E2673 /* StackLinkedList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StackLinkedList.h; sourceTree = "<group>"; };
 		E99D62431C975C6C009E2673 /* StackLinkedList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StackLinkedList.m; sourceTree = "<group>"; };
 		E99D62471C976B6C009E2673 /* ListNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListNode.m; sourceTree = "<group>"; };
+		E9A480A11C989B63001266F9 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		E9A480A21C989B63001266F9 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		E9A480A41C98A959001266F9 /* LocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationController.h; sourceTree = "<group>"; };
+		E9A480A51C98A959001266F9 /* LocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationController.m; sourceTree = "<group>"; };
+		E9A480A81C98DB03001266F9 /* Anagrams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Anagrams.h; sourceTree = "<group>"; };
+		E9A480A91C98DB03001266F9 /* Anagrams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Anagrams.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +132,8 @@
 			isa = PBXGroup;
 			children = (
 				E99D62381C975C11009E2673 /* Monday_CodeChallenge */,
+				E9A480AB1C98DB0F001266F9 /* Tuesday_CodeChallenge */,
+				E9A480A71C98A95D001266F9 /* Model */,
 				E99D62331C974191009E2673 /* Controllers */,
 				E99D62341C9741AA009E2673 /* View */,
 				E99D61F71C971FFC009E2673 /* Supporting Files */,
@@ -171,6 +182,8 @@
 			children = (
 				E99D61FD1C971FFC009E2673 /* ViewController.h */,
 				E99D61FE1C971FFC009E2673 /* ViewController.m */,
+				E9A480A11C989B63001266F9 /* DetailViewController.h */,
+				E9A480A21C989B63001266F9 /* DetailViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -212,6 +225,24 @@
 				E99D62401C975C65009E2673 /* QueueLinkedList.m */,
 			);
 			name = QUEUE;
+			sourceTree = "<group>";
+		};
+		E9A480A71C98A95D001266F9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E9A480A51C98A959001266F9 /* LocationController.m */,
+				E9A480A41C98A959001266F9 /* LocationController.h */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		E9A480AB1C98DB0F001266F9 /* Tuesday_CodeChallenge */ = {
+			isa = PBXGroup;
+			children = (
+				E9A480A81C98DB03001266F9 /* Anagrams.h */,
+				E9A480A91C98DB03001266F9 /* Anagrams.m */,
+			);
+			name = Tuesday_CodeChallenge;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -289,12 +320,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9A480AA1C98DB03001266F9 /* Anagrams.m in Sources */,
+				E9A480A61C98A959001266F9 /* LocationController.m in Sources */,
 				E99D61FF1C971FFC009E2673 /* ViewController.m in Sources */,
 				E99D62481C976B6C009E2673 /* ListNode.m in Sources */,
 				E99D62441C975C6C009E2673 /* StackLinkedList.m in Sources */,
 				E99D61FC1C971FFC009E2673 /* AppDelegate.m in Sources */,
 				E99D62411C975C65009E2673 /* QueueLinkedList.m in Sources */,
 				E99D61F91C971FFC009E2673 /* main.m in Sources */,
+				E9A480A31C989B63001266F9 /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +485,7 @@
 				E99D620D1C971FFC009E2673 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
