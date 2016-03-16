@@ -140,8 +140,10 @@
                 DetailViewController * dvc = (DetailViewController *) segue.destinationViewController;
                 dvc.annotationTitle = castSender.annotation.title;
                 dvc.location = castSender.annotation.coordinate;
+                
+                __weak typeof(self) weakSelf = self;
                 dvc.completion = ^(MKCircle *circle){
-                    [self.mainMapView addOverlay:circle];
+                    [weakSelf.mainMapView addOverlay:circle];
                 };
             }
         }
