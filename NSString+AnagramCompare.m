@@ -25,9 +25,9 @@
     }
     
     for (NSString *character in secondStringArray) {
-        if (![character isEqualToString:@" "]) {
+        if (![character isEqualToString:@" "]) { //I would use Regex here. I tried. But I have no clue what I'm doing. :P
             
-            NSLog(@"CURRENT: %@  |  Removing %@...", temporarySelfString, character);
+//            NSLog(@"CURRENT: %@  |  Removing %@...", temporarySelfString, character);
             
             if ([temporarySelfString containsString:character]) {
                 [temporarySelfString replaceCharactersInRange:[temporarySelfString rangeOfString:character] withString:@""];
