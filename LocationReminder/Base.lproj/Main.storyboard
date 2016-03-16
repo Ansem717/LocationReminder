@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qkT-e6-ODH">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -51,6 +51,11 @@
                             </button>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aDf-ne-edX">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="542"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Sm8-Qu-TAq"/>
+                                    <outletCollection property="gestureRecognizers" destination="Vq5-Mf-lQm" appends="YES" id="OBu-ZP-yu4"/>
+                                </connections>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -67,11 +72,54 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="G3H-r4-bXe" secondAttribute="bottom" constant="20" id="tuR-AL-4IJ"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="YEn-eo-OCg"/>
                     <connections>
                         <outlet property="mainMapView" destination="aDf-ne-edX" id="XRo-ie-SMb"/>
+                        <segue destination="KPR-0a-B4k" kind="show" identifier="AnnotationToDetailView" id="uAx-GW-Gu4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="Vq5-Mf-lQm">
+                    <connections>
+                        <action selector="longGesturePressed:" destination="BYZ-38-t0r" id="WuJ-Rv-RbZ"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1397" y="363"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="J99-RW-yJ6">
+            <objects>
+                <viewController id="KPR-0a-B4k" customClass="DetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bWp-Ba-qoF"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZRc-hS-hLH"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Zbc-mZ-esL">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g11-Pu-TK9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2089" y="363"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="NGt-Kd-7Wv">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qkT-e6-ODH" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="P6N-ck-7wj">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Bdi-Hq-kOn"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D4t-v1-d6K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="585" y="363"/>
         </scene>
