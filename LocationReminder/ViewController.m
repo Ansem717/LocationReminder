@@ -38,6 +38,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.navigationItem.title = @"Map";
     [[LocationController shared].locationManager startUpdatingLocation];
 }
 
@@ -87,7 +88,7 @@
         CGPoint locationPoint = [sender locationInView:self.mainMapView];
         CLLocationCoordinate2D coord = [self.mainMapView convertPoint:locationPoint toCoordinateFromView:self.mainMapView];
 
-        MKPointAnnotation * newPoint = [[MKPointAnnotation alloc]init];
+        AnnotationWithCircle * newPoint = [[AnnotationWithCircle alloc]init];
         newPoint.title = @"New Location";
         newPoint.coordinate = coord;
         
@@ -104,22 +105,20 @@
     
     MKPinAnnotationView * annotationView = (MKPinAnnotationView*) [mapView dequeueReusableAnnotationViewWithIdentifier:@"View"];
     annotationView.annotation = annotation;
-
+    
     if (!annotationView) {
         annotationView = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"View"];
     }
     
-    annotationView.animatesDrop = YES;
-    annotationView.canShowCallout = YES;
-    
     UIButton * rightInfoButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     annotationView.rightCalloutAccessoryView = rightInfoButton;
-    
+    annotationView.animatesDrop = YES;
+    annotationView.canShowCallout = YES;
     return annotationView;
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
-    [self performSegueWithIdentifier:@"AnnotationToDetailView" sender:view];
+    [self performSegueWithIdentifier:@"AnnotationToDetailView" sender:view.annotation];
 }
 
 #pragma mark - Location Controller Delegate?
@@ -134,18 +133,31 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"AnnotationToDetailView"]) {
-        if ([sender isKindOfClass:[MKAnnotationView class]]) {
-            MKPinAnnotationView * castSender = (MKPinAnnotationView *) sender;
-            if ([segue.destinationViewController isKindOfClass:[DetailViewController class]]) {
-                DetailViewController * dvc = (DetailViewController *) segue.destinationViewController;
-                dvc.annotationTitle = castSender.annotation.title;
-                dvc.location = castSender.annotation.coordinate;
+       
+        AnnotationWithCircle * castSender = (AnnotationWithCircle *) sender;
+        
+        if ([segue.destinationViewController isKindOfClass:[DetailViewController class]]) {
+            DetailViewController * dvc = (DetailViewController *) segue.destinationViewController;
+            dvc.annotation = castSender;
+            
+            __weak typeof(self) weakSelf = self;
+            dvc.completion = ^(MKCircle *circle, NSString *title, BOOL isEnabled){
                 
-                __weak typeof(self) weakSelf = self;
-                dvc.completion = ^(MKCircle *circle){
-                    [weakSelf.mainMapView addOverlay:circle];
-                };
-            }
+                __strong typeof(self) strongSelf = weakSelf;
+                
+                castSender.title = title;
+                
+                if (castSender.circle) {
+                    [strongSelf.mainMapView removeOverlay:castSender.circle];
+                }
+                
+                castSender.circle = circle;
+                castSender.isEnabled = isEnabled;
+
+                if (isEnabled) {
+                    [strongSelf.mainMapView addOverlay:circle];
+                }
+            };
         }
     }
 }
@@ -173,7 +185,12 @@
 }
 
 - (void)setUpAdditionalUI {
-    UIBarButtonItem * signOutButton = [[UIBarButtonItem alloc]initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(signOut)];
+    UIBarButtonItem * signOutButton = [[UIBarButtonItem alloc]
+                                       initWithTitle : @"Sign Out"
+                                       style : UIBarButtonItemStylePlain
+                                       target : self
+                                       action : @selector(signOut)];
+    
     self.navigationItem.leftBarButtonItem = signOutButton;
 }
 

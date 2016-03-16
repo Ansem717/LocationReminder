@@ -12,38 +12,81 @@
 
 @interface DetailViewController ()
 
+@property (weak, nonatomic) IBOutlet UITextField *reminderTitleFromUser;
+@property (weak, nonatomic) IBOutlet UITextField *radiusFromUser;
+@property (weak, nonatomic) IBOutlet UISwitch *isEnabled;
+
+- (IBAction)isEnabledSWITCHED:(UISwitch *)sender;
+
 @end
 
 @implementation DetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    NSLog(@"%@", self.annotationTitle);
-    NSLog(@"Long: %f", self.location.longitude);
-    NSLog(@"Lati: %f", self.location.latitude);
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationItem.title = @"Edit Reminder";
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:@"Save"
+                                   style:UIBarButtonItemStylePlain
+                                   target:self
+                                   action:@selector(saveReminder)];
+    self.navigationItem.rightBarButtonItem = saveButton;
+    self.navigationItem.leftBarButtonItem = self.navigationItem.backBarButtonItem;
+    self.reminderTitleFromUser.text = self.annotation.title;
+    
+    if (self.annotation.circle) {
+        self.radiusFromUser.text = [NSString stringWithFormat:@"%.0f", self.annotation.circle.radius];
+        [self.isEnabled setOn:self.annotation.isEnabled];
+    } else {
+        self.radiusFromUser.text = @"100";
+        [self.isEnabled setOn:YES];
+    }
+}
+
+- (void)saveReminder {
     Reminder *reminder = [[Reminder alloc]init];
-    reminder.name = @"Party Hardy";
-    reminder.radius = @100;
-    reminder.location = [PFGeoPoint geoPointWithLatitude:self.location.latitude longitude:self.location.longitude];
+    reminder.name = self.reminderTitleFromUser.text;
+    
+    NSNumberFormatter * formatter = [[NSNumberFormatter alloc]init];
+    NSNumber *radiusAsNumber = [formatter numberFromString:self.radiusFromUser.text];
+    reminder.radius = radiusAsNumber;
+    reminder.location = [PFGeoPoint geoPointWithLatitude:self.annotation.coordinate.latitude longitude:self.annotation.coordinate.longitude];
     
     if (self.completion) {
         if ([CLLocationManager isMonitoringAvailableForClass:[CLCircularRegion class]]) {
-            CLCircularRegion *region = [[CLCircularRegion alloc]initWithCenter:self.location radius:100 identifier:@"Party Hardy"];
-            [[[LocationController shared] locationManager] startMonitoringForRegion:region];
-            self.completion([MKCircle circleWithCenterCoordinate:self.location radius:100]);
+            if (self.isEnabled.isOn) {
+                
+                CLCircularRegion *region = [[CLCircularRegion alloc]
+                                            initWithCenter:self.annotation.coordinate
+                                            radius:[radiusAsNumber doubleValue]
+                                            identifier:self.reminderTitleFromUser.text];
+                
+                [[[LocationController shared] locationManager] startMonitoringForRegion:region];
+            }
+            
+            self.completion([MKCircle circleWithCenterCoordinate:self.annotation.coordinate radius:[radiusAsNumber doubleValue]], reminder.name, self.isEnabled.isOn);
             [[self navigationController] popViewControllerAnimated:YES];
         }
     }
-    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
+- (IBAction)isEnabledSWITCHED:(UISwitch *)sender {
+//    self.annotation.isEnabled = sender.isOn;
+}
+
+
+
+
+
 @end
+
+
+

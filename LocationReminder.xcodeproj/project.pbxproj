@@ -38,6 +38,7 @@
 		E9A480A61C98A959001266F9 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A480A51C98A959001266F9 /* LocationController.m */; };
 		E9A480AF1C98F410001266F9 /* NSString+AnagramCompare.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A480AE1C98F410001266F9 /* NSString+AnagramCompare.m */; };
 		E9AB6DD51C99D1060033F26A /* Reminder.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AB6DD41C99D1060033F26A /* Reminder.m */; };
+		E9AB6DDB1C9A0C670033F26A /* AnnotationWithCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AB6DDA1C9A0C670033F26A /* AnnotationWithCircle.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,6 +84,8 @@
 		E9A480AE1C98F410001266F9 /* NSString+AnagramCompare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+AnagramCompare.m"; path = "../NSString+AnagramCompare.m"; sourceTree = "<group>"; };
 		E9AB6DD31C99D1060033F26A /* Reminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reminder.h; sourceTree = "<group>"; };
 		E9AB6DD41C99D1060033F26A /* Reminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reminder.m; sourceTree = "<group>"; };
+		E9AB6DD91C9A0C670033F26A /* AnnotationWithCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnotationWithCircle.h; sourceTree = "<group>"; };
+		E9AB6DDA1C9A0C670033F26A /* AnnotationWithCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnnotationWithCircle.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,6 +239,8 @@
 				E9A480A51C98A959001266F9 /* LocationController.m */,
 				E9AB6DD31C99D1060033F26A /* Reminder.h */,
 				E9AB6DD41C99D1060033F26A /* Reminder.m */,
+				E9AB6DD91C9A0C670033F26A /* AnnotationWithCircle.h */,
+				E9AB6DDA1C9A0C670033F26A /* AnnotationWithCircle.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -333,6 +338,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9AB6DDB1C9A0C670033F26A /* AnnotationWithCircle.m in Sources */,
 				E9A480A61C98A959001266F9 /* LocationController.m in Sources */,
 				E99D61FF1C971FFC009E2673 /* ViewController.m in Sources */,
 				E99D62481C976B6C009E2673 /* ListNode.m in Sources */,

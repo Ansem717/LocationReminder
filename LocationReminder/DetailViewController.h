@@ -7,15 +7,15 @@
 //
 
 #import "ViewController.h"
+#import "AnnotationWithCircle.h"
 
 @import MapKit;
 
-typedef void(^DetailViewControllerCompletion)(MKCircle *circle);
+typedef void(^DetailViewControllerCompletion)(MKCircle *circle, NSString *title, BOOL isEnabled);
 
 @interface DetailViewController : ViewController
 
-@property (copy, nonatomic) NSString * annotationTitle;
-@property (nonatomic) CLLocationCoordinate2D location;
+@property (strong, nonatomic) AnnotationWithCircle * annotation;
 @property (copy, nonatomic) DetailViewControllerCompletion completion;
 
 @end
