@@ -15,22 +15,22 @@ int main(int argc, char * argv[]) {
         
         //CODE CHALLENGE RESULTS
         
-        NSString *first = @"Getting the work done";
-        NSString *second = @"Tethered king wont go";
-        NSString *third = @"A decimal point";
-        NSString *fourth = @"Im a dot in place";
-        NSString *fifth = @"Statue of Liberty";
-        NSString *sixth = @"Built to stay free";
+//        NSString *first = @"Getting the work done";
+//        NSString *second = @"Tethered king wont go";
+//        NSString *third = @"A decimal point";
+//        NSString *fourth = @"Im a dot in place";
+//        NSString *fifth = @"Statue of Liberty";
+//        NSString *sixth = @"Built to stay free";
         
-        //Below are anagrams
-        [first isAnagramWith:second];
-        [third isAnagramWith:fourth];
-        [fifth isAnagramWith:sixth];
-        
-        //Below are NOT anagrams
-        [sixth isAnagramWith:first];
-        [fourth isAnagramWith:second];
-        [third isAnagramWith:fifth];
+//        //Below are anagrams
+//        [first isAnagramWith:second];
+//        [third isAnagramWith:fourth];
+//        [fifth isAnagramWith:sixth];
+//        
+//        //Below are NOT anagrams
+//        [sixth isAnagramWith:first];
+//        [fourth isAnagramWith:second];
+//        [third isAnagramWith:fifth];
         
         //END
         

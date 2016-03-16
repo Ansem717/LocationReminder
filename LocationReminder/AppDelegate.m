@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
-
+#import "Reminder.h"
 
 @interface AppDelegate ()
 

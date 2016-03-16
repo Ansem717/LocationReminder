@@ -39,9 +39,9 @@
     }
     
     if (isAnagram) {
-        NSLog(@"The two strings \"%@\" and \"%@\" are anagrams!\n\n", self, secondString);
+        NSLog(@"The two strings \"%@\" and \"%@\" are anagrams!", self, secondString);
     } else {
-        NSLog(@"The two strings \"%@\" and \"%@\" are NOT anagrams.\n\n", self, secondString);
+        NSLog(@"The two strings \"%@\" and \"%@\" are NOT anagrams.", self, secondString);
     }
     
 }
