@@ -73,7 +73,9 @@
 //}
 
 - (void)registerForNotifications {
-    UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound
+    UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert
+                                             | UIUserNotificationTypeBadge
+                                             | UIUserNotificationTypeSound
                                                                               categories:nil];
     [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
 }

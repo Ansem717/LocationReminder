@@ -181,6 +181,11 @@
 - (void)login {
     if (![PFUser currentUser]) {
         PFLogInViewController * loginVC = [[PFLogInViewController alloc]init];
+        loginVC.fields = PFLogInFieldsUsernameAndPassword
+            | PFLogInFieldsLogInButton
+            | PFLogInFieldsSignUpButton
+            | PFLogInFieldsPasswordForgotten;
+        
         loginVC.delegate = self;
         loginVC.signUpController.delegate = self;
         [self presentViewController:loginVC animated:YES completion:nil];
@@ -190,8 +195,11 @@
 }
 
 - (void)setUpAdditionalUI {
+    
+    NSString * dynamicTitle = [PFUser currentUser] ? @"Sign Out" : @"Sign In";
+    
     UIBarButtonItem * signOutButton = [[UIBarButtonItem alloc]
-                                       initWithTitle : @"Sign Out"
+                                       initWithTitle : dynamicTitle
                                        style : UIBarButtonItemStylePlain
                                        target : self
                                        action : @selector(signOut)];
@@ -204,6 +212,10 @@
     for (CLRegion * region in [[[LocationController shared]locationManager] monitoredRegions]) {
         [[[LocationController shared]locationManager] stopMonitoringForRegion:region];
     }
+
+    [self.mainMapView removeAnnotations:[self.mainMapView annotations]];
+    [self.mainMapView removeOverlays:[self.mainMapView overlays]];
+    
     [PFUser logOut];
     [self login];
 }
