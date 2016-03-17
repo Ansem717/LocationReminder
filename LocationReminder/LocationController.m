@@ -37,7 +37,10 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
-    NSLog(@"%s", __FUNCTION__);
+    UILocalNotification * notify = [[UILocalNotification alloc] init];
+    notify.alertTitle = [NSString stringWithFormat:@"Location Reminder!"];
+    notify.alertBody = @"Click to view the location reminder";
+    [[UIApplication sharedApplication] presentLocalNotificationNow:notify];
 }
 
 @end

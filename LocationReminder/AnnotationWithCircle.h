@@ -11,6 +11,7 @@
 @interface AnnotationWithCircle : MKPointAnnotation
 
 @property (strong, nonatomic) MKCircle * circle;
+@property (strong, nonatomic) NSString * idenitfier;
 @property (nonatomic) BOOL isEnabled;
 
 @end

@@ -18,9 +18,11 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [self registerForNotifications];
+    
     [self setUpParse];
-//    [self saveLocationToParse];
-    [self getLocationsOrWhatever];
+//    [self getLocationsOrWhatever];
     return YES;
 }
 
@@ -33,41 +35,68 @@
     [Parse initializeWithConfiguration:configuration];
 }
 
-- (void)saveLocationToParse {
-    PFGeoPoint * geoPoint = [PFGeoPoint geoPointWithLatitude:45.92 longitude:63.342];
-    PFObject * pointObject = [PFObject objectWithClassName:@"Place"];
-    [pointObject setObject:geoPoint forKey:@"location"];
-    
-    [pointObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        if (error) {
-            NSLog(@"%@", [error localizedDescription]);
-            return;
-        }
-        
-        if (succeeded) {
-//            NSLog(@"Yay!");
-            return;
-        }
-        
-        NSLog(@"No error, no succeed?");
-        
-    }];
-}
-
-- (void)getLocationsOrWhatever {
-    
-    PFQuery * q = [PFQuery queryWithClassName:@"Place"];
-    [q findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-        if (error) {
-            NSLog(@"%@", [error localizedDescription]);
-            return;
-        }
-        
-//        for (PFObject * object in objects) {
-//            PFGeoPoint * geoPoint = (PFGeoPoint *) object[@"location"];
-//            NSLog(@"Geopoint of _TITLE_ is: %@", geoPoint);
+//- (void)saveLocationToParse {
+//    PFGeoPoint * geoPoint = [PFGeoPoint geoPointWithLatitude:45.92 longitude:63.342];
+//    PFObject * pointObject = [PFObject objectWithClassName:@"Place"];
+//    [pointObject setObject:geoPoint forKey:@"location"];
+//    
+//    [pointObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+//        if (error) {
+//            NSLog(@"%@", [error localizedDescription]);
+//            return;
 //        }
-    }];
+//        
+//        if (succeeded) {
+////            NSLog(@"Yay!");
+//            return;
+//        }
+//        
+//        NSLog(@"No error, no succeed?");
+//        
+//    }];
+//}
+
+//- (void)getLocationsOrWhatever {
+//    
+//    PFQuery * q = [PFQuery queryWithClassName:@"Place"];
+//    [q findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+//        if (error) {
+//            NSLog(@"%@", [error localizedDescription]);
+//            return;
+//        }
+//        
+////        for (PFObject * object in objects) {
+////            PFGeoPoint * geoPoint = (PFGeoPoint *) object[@"location"];
+////            NSLog(@"Geopoint of _TITLE_ is: %@", geoPoint);
+////        }
+//    }];
+//}
+
+- (void)registerForNotifications {
+    UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert
+                                             | UIUserNotificationTypeBadge
+                                             | UIUserNotificationTypeSound
+                                                                              categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

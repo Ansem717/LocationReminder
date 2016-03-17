@@ -15,6 +15,8 @@
 #import <Parse/Parse.h>
 #import <ParseUI/ParseUI.h>
 
+#import "Reminder.h"
+
 @import MapKit;
 
 @interface ViewController () <MKMapViewDelegate, LocationControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
@@ -34,18 +36,19 @@
     self.mainMapView.showsUserLocation = YES;
     [[LocationController shared]setDelegate:self];
     [self login];
+    //    [self getReminderFromParse];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     NSLog(@"%@", [[LocationController shared]locationManager].monitoredRegions);
     self.navigationItem.title = @"Map";
-    [[LocationController shared].locationManager startUpdatingLocation];
+    [[[LocationController shared]locationManager] startUpdatingLocation];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[LocationController shared].locationManager stopUpdatingLocation];
+    [[[LocationController shared]locationManager] stopUpdatingLocation];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -88,7 +91,7 @@
     if (sender.state == UIGestureRecognizerStateBegan) {
         CGPoint locationPoint = [sender locationInView:self.mainMapView];
         CLLocationCoordinate2D coord = [self.mainMapView convertPoint:locationPoint toCoordinateFromView:self.mainMapView];
-
+        
         AnnotationWithCircle * newPoint = [[AnnotationWithCircle alloc]init];
         newPoint.title = @"New Location";
         newPoint.coordinate = coord;
@@ -134,7 +137,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"AnnotationToDetailView"]) {
-       
+        
         AnnotationWithCircle * castSender = (AnnotationWithCircle *) sender;
         
         if ([segue.destinationViewController isKindOfClass:[AddReminderViewController class]]) {
@@ -155,7 +158,7 @@
                 
                 castSender.circle = circle;
                 castSender.isEnabled = isEnabled;
-
+                
                 if (isEnabled) {
                     [strongSelf.mainMapView addOverlay:circle];
                 }
@@ -178,6 +181,11 @@
 - (void)login {
     if (![PFUser currentUser]) {
         PFLogInViewController * loginVC = [[PFLogInViewController alloc]init];
+        loginVC.fields = PFLogInFieldsUsernameAndPassword
+            | PFLogInFieldsLogInButton
+            | PFLogInFieldsSignUpButton
+            | PFLogInFieldsPasswordForgotten;
+        
         loginVC.delegate = self;
         loginVC.signUpController.delegate = self;
         [self presentViewController:loginVC animated:YES completion:nil];
@@ -187,16 +195,27 @@
 }
 
 - (void)setUpAdditionalUI {
+    
+    NSString * dynamicTitle = [PFUser currentUser] ? @"Sign Out" : @"Sign In";
+    
     UIBarButtonItem * signOutButton = [[UIBarButtonItem alloc]
-                                       initWithTitle : @"Sign Out"
+                                       initWithTitle : dynamicTitle
                                        style : UIBarButtonItemStylePlain
                                        target : self
                                        action : @selector(signOut)];
     
     self.navigationItem.leftBarButtonItem = signOutButton;
+    [self getReminderFromParse];
 }
 
 - (void)signOut {
+    for (CLRegion * region in [[[LocationController shared]locationManager] monitoredRegions]) {
+        [[[LocationController shared]locationManager] stopMonitoringForRegion:region];
+    }
+
+    [self.mainMapView removeAnnotations:[self.mainMapView annotations]];
+    [self.mainMapView removeOverlays:[self.mainMapView overlays]];
+    
     [PFUser logOut];
     [self login];
 }
@@ -209,6 +228,56 @@
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
     [self dismissViewControllerAnimated:YES completion:nil];
     [self setUpAdditionalUI];
+}
+
+#pragma mark - Download from parse
+
+- (void)getReminderFromParse {
+    PFQuery * q = [PFQuery queryWithClassName:NSStringFromClass([Reminder class])];
+    
+    __weak typeof(self) weakSelf = self;
+    [q findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        __strong typeof(self) strongSelf = weakSelf;
+        
+        if (error) {
+            NSLog(@"%@", [error localizedDescription]);
+            return;
+        }
+        
+        //Stop monitoring current regions (since every region is saved on parse, we will not lose anything)
+        for (CLRegion * region in [[[LocationController shared]locationManager] monitoredRegions]) {
+            [[[LocationController shared]locationManager] stopMonitoringForRegion:region];
+        }
+        
+        for (Reminder * reminder in objects) {
+            
+            CLLocationCoordinate2D reminderCoord =  CLLocationCoordinate2DMake(reminder.location.latitude, reminder.location.longitude);
+            MKCircle * reminderCircle = [MKCircle circleWithCenterCoordinate:reminderCoord radius:[reminder.radius doubleValue]];
+            
+            //1) Make Pin
+            AnnotationWithCircle * newPoint = [[AnnotationWithCircle alloc]init];
+            newPoint.title = reminder.name;
+            newPoint.coordinate = reminderCoord;
+            newPoint.circle = reminderCircle;
+            newPoint.isEnabled = reminder.isEnabled;
+            [strongSelf.mainMapView addAnnotation:newPoint];
+            
+            //2) Display Circle For Pin
+            if (reminder.isEnabled) {
+                [strongSelf.mainMapView addOverlay:reminderCircle];
+            }
+            
+            //3) Make the region and monitor it.
+            if (reminder.isEnabled) {
+                CLCircularRegion *region = [[CLCircularRegion alloc]
+                                            initWithCenter:reminderCoord
+                                            radius:[reminder.radius doubleValue]
+                                            identifier:reminder.idString];
+                
+                [[[LocationController shared] locationManager] startMonitoringForRegion:region];
+            }
+        }
+    }];
 }
 
 @end
