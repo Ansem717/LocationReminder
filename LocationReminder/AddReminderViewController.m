@@ -17,6 +17,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *radiusFromUser;
 @property (weak, nonatomic) IBOutlet UISwitch *isEnabled;
 
+@property (weak, nonatomic) IBOutlet UIView *pauseScreenOverlay;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *savingIndicator;
+
+
 - (IBAction)isEnabledSWITCHED:(UISwitch *)sender;
 
 @end
@@ -31,9 +35,10 @@
     [super viewWillAppear:animated];
     
     self.uniqueButStaticString = [NSString stringWithFormat:@"%f%f", self.annotation.coordinate.latitude, self.annotation.coordinate.longitude];
-
+    
     
     self.navigationItem.title = @"Edit Reminder";
+    self.pauseScreenOverlay.alpha = 0.0;
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"Save"
                                    style:UIBarButtonItemStylePlain
@@ -70,37 +75,61 @@
     reminder.name = self.reminderTitleFromUser.text;
     reminder.location = [PFGeoPoint geoPointWithLatitude:self.annotation.coordinate.latitude longitude:self.annotation.coordinate.longitude];
     reminder.idString = self.uniqueButStaticString;
-    reminder.circle = [MKCircle circleWithCenterCoordinate:self.annotation.coordinate radius:[radiusAsNumber doubleValue]];
+    reminder.radius = radiusAsNumber;
     reminder.isEnabled = self.isEnabled.isOn;
     
-    [reminder saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+    self.pauseScreenOverlay.alpha = 0.3;
+    [self.savingIndicator startAnimating];
+    self.navigationItem.leftBarButtonItem.enabled = NO;
+    self.navigationItem.backBarButtonItem.enabled = NO;
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    
+    PFQuery * q = [PFQuery queryWithClassName:[Reminder parseClassName]];
+    [q whereKey:@"idString" equalTo:self.uniqueButStaticString];
+    [q findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (error) {
             NSLog(@"%@", [error localizedDescription]);
             return;
         }
         
-        if (succeeded) {
-            if (self.completion) {
-                if ([CLLocationManager isMonitoringAvailableForClass:[CLCircularRegion class]]) {
-                    if (self.isEnabled.isOn) {
-                        
-                        CLCircularRegion *region = [[CLCircularRegion alloc]
-                                                    initWithCenter:self.annotation.coordinate
-                                                    radius:[radiusAsNumber doubleValue]
-                                                    identifier:self.uniqueButStaticString];
-                        
-                        [[[LocationController shared] locationManager] startMonitoringForRegion:region];
-                    }
-                    
-                    self.completion(reminder.circle, reminder.name, reminder.isEnabled);
-                    [[self navigationController] popViewControllerAnimated:YES];
-                }
-            }
-            
-            return;
+        for (Reminder *reminder in objects) {
+            [reminder deleteInBackground]; //Despite this taking more time, it'll prevent duplactes on server
         }
         
-        NSLog(@"No error but no successs?");
+        [reminder saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            if (error) {
+                NSLog(@"%@", [error localizedDescription]);
+                return;
+            }
+            
+            if (succeeded) {
+                if (self.completion) {
+                    if ([CLLocationManager isMonitoringAvailableForClass:[CLCircularRegion class]]) {
+                        if (self.isEnabled.isOn) {
+                            
+                            CLCircularRegion *region = [[CLCircularRegion alloc]
+                                                        initWithCenter:self.annotation.coordinate
+                                                        radius:[radiusAsNumber doubleValue]
+                                                        identifier:self.uniqueButStaticString];
+                            
+                            [[[LocationController shared] locationManager] startMonitoringForRegion:region];
+                        }
+                        
+                        self.pauseScreenOverlay.alpha = 0.0;
+                        [self.savingIndicator stopAnimating];
+                        self.navigationItem.leftBarButtonItem.enabled = YES;
+                        self.navigationItem.rightBarButtonItem.enabled = YES;
+                        
+                        self.completion([MKCircle circleWithCenterCoordinate:self.annotation.coordinate radius:[radiusAsNumber doubleValue]], reminder.name, reminder.isEnabled);
+                        [[self navigationController] popViewControllerAnimated:YES];
+                    }
+                }
+                
+                return;
+            }
+            
+            NSLog(@"No error but no successs?");
+        }];
     }];
 }
 
@@ -109,7 +138,7 @@
 }
 
 - (IBAction)isEnabledSWITCHED:(UISwitch *)sender {
-//    self.annotation.isEnabled = sender.isOn;
+    //    self.annotation.isEnabled = sender.isOn;
 }
 
 

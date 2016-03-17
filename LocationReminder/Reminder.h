@@ -14,8 +14,8 @@
 
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) PFGeoPoint *location;
+@property (strong, nonatomic) NSNumber *radius;
 @property (strong, nonatomic) NSString *idString;
-@property (strong, nonatomic) MKCircle *circle;
 @property (nonatomic) BOOL isEnabled;
 
 @end

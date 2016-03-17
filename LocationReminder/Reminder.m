@@ -9,7 +9,7 @@
 #import "Reminder.h"
 
 @implementation Reminder
-@dynamic name, location, idString, circle, isEnabled;
+@dynamic name, location, idString, radius, isEnabled;
 
 + (void)load {
     [self registerSubclass];

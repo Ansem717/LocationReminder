@@ -222,7 +222,11 @@
 
 - (void)getReminderFromParse {
     PFQuery * q = [PFQuery queryWithClassName:NSStringFromClass([Reminder class])];
+    
+    __weak typeof(self) weakSelf = self;
     [q findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        __strong typeof(self) strongSelf = weakSelf;
+        
         if (error) {
             NSLog(@"%@", [error localizedDescription]);
             return;
@@ -236,25 +240,26 @@
         for (Reminder * reminder in objects) {
             
             CLLocationCoordinate2D reminderCoord =  CLLocationCoordinate2DMake(reminder.location.latitude, reminder.location.longitude);
+            MKCircle * reminderCircle = [MKCircle circleWithCenterCoordinate:reminderCoord radius:[reminder.radius doubleValue]];
             
             //1) Make Pin
             AnnotationWithCircle * newPoint = [[AnnotationWithCircle alloc]init];
             newPoint.title = reminder.name;
             newPoint.coordinate = reminderCoord;
-            newPoint.circle = reminder.circle;
+            newPoint.circle = reminderCircle;
             newPoint.isEnabled = reminder.isEnabled;
-            [self.mainMapView addAnnotation:newPoint];
+            [strongSelf.mainMapView addAnnotation:newPoint];
             
-            //2) Make Circle For Pin
+            //2) Display Circle For Pin
             if (reminder.isEnabled) {
-                //
+                [strongSelf.mainMapView addOverlay:reminderCircle];
             }
             
             //3) Make the region and monitor it.
             if (reminder.isEnabled) {
                 CLCircularRegion *region = [[CLCircularRegion alloc]
                                             initWithCenter:reminderCoord
-                                            radius:reminder.circle.radius
+                                            radius:[reminder.radius doubleValue]
                                             identifier:reminder.idString];
                 
                 [[[LocationController shared] locationManager] startMonitoringForRegion:region];
