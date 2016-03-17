@@ -9,12 +9,15 @@
 #import "ViewController.h"
 #import <CoreLocation/CoreLocation.h>
 
-#import "DetailViewController.h"
+#import "AddReminderViewController.h"
 #import "LocationController.h"
+
+#import <Parse/Parse.h>
+#import <ParseUI/ParseUI.h>
 
 @import MapKit;
 
-@interface ViewController () <MKMapViewDelegate, LocationControllerDelegate>
+@interface ViewController () <MKMapViewDelegate, LocationControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mainMapView;
 
@@ -28,20 +31,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.mainMapView.showsUserLocation = YES;
+    [[LocationController shared]setDelegate:self];
+    [self login];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [[LocationController shared]setDelegate:self];
+    NSLog(@"%@", [[LocationController shared]locationManager].monitoredRegions);
+    self.navigationItem.title = @"Map";
     [[LocationController shared].locationManager startUpdatingLocation];
-    
-    self.mainMapView.showsUserLocation = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
     [[LocationController shared].locationManager stopUpdatingLocation];
 }
 
@@ -86,7 +89,7 @@
         CGPoint locationPoint = [sender locationInView:self.mainMapView];
         CLLocationCoordinate2D coord = [self.mainMapView convertPoint:locationPoint toCoordinateFromView:self.mainMapView];
 
-        MKPointAnnotation * newPoint = [[MKPointAnnotation alloc]init];
+        AnnotationWithCircle * newPoint = [[AnnotationWithCircle alloc]init];
         newPoint.title = @"New Location";
         newPoint.coordinate = coord;
         
@@ -103,22 +106,20 @@
     
     MKPinAnnotationView * annotationView = (MKPinAnnotationView*) [mapView dequeueReusableAnnotationViewWithIdentifier:@"View"];
     annotationView.annotation = annotation;
-
+    
     if (!annotationView) {
         annotationView = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"View"];
     }
     
-    annotationView.animatesDrop = YES;
-    annotationView.canShowCallout = YES;
-    
     UIButton * rightInfoButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     annotationView.rightCalloutAccessoryView = rightInfoButton;
-    
+    annotationView.animatesDrop = YES;
+    annotationView.canShowCallout = YES;
     return annotationView;
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
-    [self performSegueWithIdentifier:@"AnnotationToDetailView" sender:view];
+    [self performSegueWithIdentifier:@"AnnotationToDetailView" sender:view.annotation];
 }
 
 #pragma mark - Location Controller Delegate?
@@ -133,15 +134,81 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"AnnotationToDetailView"]) {
-        if ([sender isKindOfClass:[MKAnnotationView class]]) {
-            MKPinAnnotationView * castSender = (MKPinAnnotationView *) sender;
-            if ([segue.destinationViewController isKindOfClass:[DetailViewController class]]) {
-                DetailViewController * dvc = (DetailViewController *) segue.destinationViewController;
-                dvc.annotationTitle = castSender.annotation.title;
-                dvc.location = castSender.annotation.coordinate;
-            }
+       
+        AnnotationWithCircle * castSender = (AnnotationWithCircle *) sender;
+        
+        if ([segue.destinationViewController isKindOfClass:[AddReminderViewController class]]) {
+            AddReminderViewController * dvc = (AddReminderViewController *) segue.destinationViewController;
+            dvc.annotation = castSender;
+            
+            
+            __weak typeof(self) weakSelf = self;
+            dvc.completion = ^(MKCircle *circle, NSString *title, BOOL isEnabled){
+                
+                __strong typeof(self) strongSelf = weakSelf;
+                
+                castSender.title = title;
+                
+                if (castSender.circle) {
+                    [strongSelf.mainMapView removeOverlay:castSender.circle];
+                }
+                
+                castSender.circle = circle;
+                castSender.isEnabled = isEnabled;
+
+                if (isEnabled) {
+                    [strongSelf.mainMapView addOverlay:circle];
+                }
+            };
         }
     }
+}
+
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
+    MKCircleRenderer * renderer = [[MKCircleRenderer alloc] initWithOverlay:overlay];
+    renderer.strokeColor = [UIColor greenColor];
+    renderer.fillColor = [UIColor blackColor];
+    renderer.alpha = 0.5;
+    return renderer;
+}
+
+
+#pragma mark - login functions
+
+- (void)login {
+    if (![PFUser currentUser]) {
+        PFLogInViewController * loginVC = [[PFLogInViewController alloc]init];
+        loginVC.delegate = self;
+        loginVC.signUpController.delegate = self;
+        [self presentViewController:loginVC animated:YES completion:nil];
+    } else {
+        [self setUpAdditionalUI];
+    }
+}
+
+- (void)setUpAdditionalUI {
+    UIBarButtonItem * signOutButton = [[UIBarButtonItem alloc]
+                                       initWithTitle : @"Sign Out"
+                                       style : UIBarButtonItemStylePlain
+                                       target : self
+                                       action : @selector(signOut)];
+    
+    self.navigationItem.leftBarButtonItem = signOutButton;
+}
+
+- (void)signOut {
+    [PFUser logOut];
+    [self login];
+}
+
+- (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self setUpAdditionalUI];
+}
+
+- (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self setUpAdditionalUI];
 }
 
 @end
