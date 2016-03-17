@@ -1,16 +1,16 @@
 //
-//  DetailViewController.m
+//  AddReminderViewController.m
 //  LocationReminder
 //
 //  Created by Andy Malik on 3/15/16.
 //  Copyright © 2016 Ansem717. All rights reserved.
 //
 
-#import "DetailViewController.h"
+#import "AddReminderViewController.h"
 #import "Reminder.h"
 #import "LocationController.h"
 
-@interface DetailViewController ()
+@interface AddReminderViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *reminderTitleFromUser;
 @property (weak, nonatomic) IBOutlet UITextField *radiusFromUser;
@@ -20,7 +20,7 @@
 
 @end
 
-@implementation DetailViewController
+@implementation AddReminderViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -28,6 +28,10 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    self.uniqueButStaticString = [NSString stringWithFormat:@"%f%f", self.annotation.coordinate.latitude, self.annotation.coordinate.longitude];
+
+    
     self.navigationItem.title = @"Edit Reminder";
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"Save"
@@ -45,14 +49,29 @@
         self.radiusFromUser.text = @"100";
         [self.isEnabled setOn:YES];
     }
+    
+    
+    
 }
 
 - (void)saveReminder {
-    Reminder *reminder = [[Reminder alloc]init];
-    reminder.name = self.reminderTitleFromUser.text;
+    
+    if (self.annotation.circle) {
+        //If this annotation has a circle, then we're monitoring it. Let's turn it off for now.
+    
+        CLCircularRegion *region = [[CLCircularRegion alloc]
+                                    initWithCenter:self.annotation.coordinate
+                                    radius:self.annotation.circle.radius
+                                    identifier:self.uniqueButStaticString];
+        
+        [[[LocationController shared] locationManager] stopMonitoringForRegion:region];
+    }
     
     NSNumberFormatter * formatter = [[NSNumberFormatter alloc]init];
     NSNumber *radiusAsNumber = [formatter numberFromString:self.radiusFromUser.text];
+    
+    Reminder *reminder = [[Reminder alloc]init];
+    reminder.name = self.reminderTitleFromUser.text;
     reminder.radius = radiusAsNumber;
     reminder.location = [PFGeoPoint geoPointWithLatitude:self.annotation.coordinate.latitude longitude:self.annotation.coordinate.longitude];
     
@@ -63,7 +82,7 @@
                 CLCircularRegion *region = [[CLCircularRegion alloc]
                                             initWithCenter:self.annotation.coordinate
                                             radius:[radiusAsNumber doubleValue]
-                                            identifier:self.reminderTitleFromUser.text];
+                                            identifier:self.uniqueButStaticString];
                 
                 [[[LocationController shared] locationManager] startMonitoringForRegion:region];
             }
@@ -81,6 +100,10 @@
 - (IBAction)isEnabledSWITCHED:(UISwitch *)sender {
 //    self.annotation.isEnabled = sender.isOn;
 }
+
+
+
+
 
 
 

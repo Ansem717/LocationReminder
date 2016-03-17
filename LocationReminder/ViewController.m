@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import <CoreLocation/CoreLocation.h>
 
-#import "DetailViewController.h"
+#import "AddReminderViewController.h"
 #import "LocationController.h"
 
 #import <Parse/Parse.h>
@@ -38,6 +38,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    NSLog(@"%@", [[LocationController shared]locationManager].monitoredRegions);
     self.navigationItem.title = @"Map";
     [[LocationController shared].locationManager startUpdatingLocation];
 }
@@ -136,9 +137,10 @@
        
         AnnotationWithCircle * castSender = (AnnotationWithCircle *) sender;
         
-        if ([segue.destinationViewController isKindOfClass:[DetailViewController class]]) {
-            DetailViewController * dvc = (DetailViewController *) segue.destinationViewController;
+        if ([segue.destinationViewController isKindOfClass:[AddReminderViewController class]]) {
+            AddReminderViewController * dvc = (AddReminderViewController *) segue.destinationViewController;
             dvc.annotation = castSender;
+            
             
             __weak typeof(self) weakSelf = self;
             dvc.completion = ^(MKCircle *circle, NSString *title, BOOL isEnabled){

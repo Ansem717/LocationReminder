@@ -34,7 +34,7 @@
 		E99D62411C975C65009E2673 /* QueueLinkedList.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D62401C975C65009E2673 /* QueueLinkedList.m */; };
 		E99D62441C975C6C009E2673 /* StackLinkedList.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D62431C975C6C009E2673 /* StackLinkedList.m */; };
 		E99D62481C976B6C009E2673 /* ListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D62471C976B6C009E2673 /* ListNode.m */; };
-		E9A480A31C989B63001266F9 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A480A21C989B63001266F9 /* DetailViewController.m */; };
+		E9A480A31C989B63001266F9 /* AddReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A480A21C989B63001266F9 /* AddReminderViewController.m */; };
 		E9A480A61C98A959001266F9 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A480A51C98A959001266F9 /* LocationController.m */; };
 		E9A480AF1C98F410001266F9 /* NSString+AnagramCompare.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A480AE1C98F410001266F9 /* NSString+AnagramCompare.m */; };
 		E9AB6DD51C99D1060033F26A /* Reminder.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AB6DD41C99D1060033F26A /* Reminder.m */; };
@@ -77,8 +77,8 @@
 		E99D62421C975C6C009E2673 /* StackLinkedList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StackLinkedList.h; sourceTree = "<group>"; };
 		E99D62431C975C6C009E2673 /* StackLinkedList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StackLinkedList.m; sourceTree = "<group>"; };
 		E99D62471C976B6C009E2673 /* ListNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListNode.m; sourceTree = "<group>"; };
-		E9A480A11C989B63001266F9 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
-		E9A480A21C989B63001266F9 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		E9A480A11C989B63001266F9 /* AddReminderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReminderViewController.h; sourceTree = "<group>"; };
+		E9A480A21C989B63001266F9 /* AddReminderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReminderViewController.m; sourceTree = "<group>"; };
 		E9A480A41C98A959001266F9 /* LocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationController.h; sourceTree = "<group>"; };
 		E9A480A51C98A959001266F9 /* LocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationController.m; sourceTree = "<group>"; };
 		E9A480AD1C98F410001266F9 /* NSString+AnagramCompare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+AnagramCompare.h"; path = "../NSString+AnagramCompare.h"; sourceTree = "<group>"; };
@@ -190,8 +190,8 @@
 			children = (
 				E99D61FD1C971FFC009E2673 /* ViewController.h */,
 				E99D61FE1C971FFC009E2673 /* ViewController.m */,
-				E9A480A11C989B63001266F9 /* DetailViewController.h */,
-				E9A480A21C989B63001266F9 /* DetailViewController.m */,
+				E9A480A11C989B63001266F9 /* AddReminderViewController.h */,
+				E9A480A21C989B63001266F9 /* AddReminderViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -362,7 +362,7 @@
 				E99D61FC1C971FFC009E2673 /* AppDelegate.m in Sources */,
 				E99D62411C975C65009E2673 /* QueueLinkedList.m in Sources */,
 				E99D61F91C971FFC009E2673 /* main.m in Sources */,
-				E9A480A31C989B63001266F9 /* DetailViewController.m in Sources */,
+				E9A480A31C989B63001266F9 /* AddReminderViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
