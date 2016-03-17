@@ -38,6 +38,13 @@
 
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
     NSLog(@"%s", __FUNCTION__);
+    UILocalNotification * notify = [[UILocalNotification alloc] init];
+    
+    notify.alertTitle = [NSString stringWithFormat:@"You've entered %@", region];
+    notify.alertBody = @"Remember <REMINDER TITLE> ";
+    
+    [[UIApplication sharedApplication] presentLocalNotificationNow:notify];
+    
 }
 
 @end

@@ -9,6 +9,7 @@
 #import "AddReminderViewController.h"
 #import "Reminder.h"
 #import "LocationController.h"
+#import <Parse/Parse.h>
 
 @interface AddReminderViewController ()
 
@@ -56,41 +57,51 @@
 
 - (void)saveReminder {
     
-    if (self.annotation.circle) {
-        //If this annotation has a circle, then we're monitoring it. Let's turn it off for now.
-    
-        CLCircularRegion *region = [[CLCircularRegion alloc]
-                                    initWithCenter:self.annotation.coordinate
-                                    radius:self.annotation.circle.radius
-                                    identifier:self.uniqueButStaticString];
-        
-        [[[LocationController shared] locationManager] stopMonitoringForRegion:region];
-    }
+    CLCircularRegion *region = [[CLCircularRegion alloc]
+                                initWithCenter:self.annotation.coordinate
+                                radius:self.annotation.circle.radius
+                                identifier:self.uniqueButStaticString];
+    [[[LocationController shared] locationManager] stopMonitoringForRegion:region];
     
     NSNumberFormatter * formatter = [[NSNumberFormatter alloc]init];
     NSNumber *radiusAsNumber = [formatter numberFromString:self.radiusFromUser.text];
     
     Reminder *reminder = [[Reminder alloc]init];
     reminder.name = self.reminderTitleFromUser.text;
-    reminder.radius = radiusAsNumber;
     reminder.location = [PFGeoPoint geoPointWithLatitude:self.annotation.coordinate.latitude longitude:self.annotation.coordinate.longitude];
+    reminder.idString = self.uniqueButStaticString;
+    reminder.circle = [MKCircle circleWithCenterCoordinate:self.annotation.coordinate radius:[radiusAsNumber doubleValue]];
+    reminder.isEnabled = self.isEnabled.isOn;
     
-    if (self.completion) {
-        if ([CLLocationManager isMonitoringAvailableForClass:[CLCircularRegion class]]) {
-            if (self.isEnabled.isOn) {
-                
-                CLCircularRegion *region = [[CLCircularRegion alloc]
-                                            initWithCenter:self.annotation.coordinate
-                                            radius:[radiusAsNumber doubleValue]
-                                            identifier:self.uniqueButStaticString];
-                
-                [[[LocationController shared] locationManager] startMonitoringForRegion:region];
+    [reminder saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"%@", [error localizedDescription]);
+            return;
+        }
+        
+        if (succeeded) {
+            if (self.completion) {
+                if ([CLLocationManager isMonitoringAvailableForClass:[CLCircularRegion class]]) {
+                    if (self.isEnabled.isOn) {
+                        
+                        CLCircularRegion *region = [[CLCircularRegion alloc]
+                                                    initWithCenter:self.annotation.coordinate
+                                                    radius:[radiusAsNumber doubleValue]
+                                                    identifier:self.uniqueButStaticString];
+                        
+                        [[[LocationController shared] locationManager] startMonitoringForRegion:region];
+                    }
+                    
+                    self.completion(reminder.circle, reminder.name, reminder.isEnabled);
+                    [[self navigationController] popViewControllerAnimated:YES];
+                }
             }
             
-            self.completion([MKCircle circleWithCenterCoordinate:self.annotation.coordinate radius:[radiusAsNumber doubleValue]], reminder.name, self.isEnabled.isOn);
-            [[self navigationController] popViewControllerAnimated:YES];
+            return;
         }
-    }
+        
+        NSLog(@"No error but no successs?");
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
