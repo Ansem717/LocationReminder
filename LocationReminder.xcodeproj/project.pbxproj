@@ -39,6 +39,7 @@
 		E9A480AF1C98F410001266F9 /* NSString+AnagramCompare.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A480AE1C98F410001266F9 /* NSString+AnagramCompare.m */; };
 		E9AB6DD51C99D1060033F26A /* Reminder.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AB6DD41C99D1060033F26A /* Reminder.m */; };
 		E9AB6DDB1C9A0C670033F26A /* AnnotationWithCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AB6DDA1C9A0C670033F26A /* AnnotationWithCircle.m */; };
+		E9AB6DDE1C9A2C160033F26A /* NSString+CalculateDigits.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AB6DDD1C9A2C160033F26A /* NSString+CalculateDigits.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +87,8 @@
 		E9AB6DD41C99D1060033F26A /* Reminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reminder.m; sourceTree = "<group>"; };
 		E9AB6DD91C9A0C670033F26A /* AnnotationWithCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnotationWithCircle.h; sourceTree = "<group>"; };
 		E9AB6DDA1C9A0C670033F26A /* AnnotationWithCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnnotationWithCircle.m; sourceTree = "<group>"; };
+		E9AB6DDC1C9A2C160033F26A /* NSString+CalculateDigits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CalculateDigits.h"; sourceTree = "<group>"; };
+		E9AB6DDD1C9A2C160033F26A /* NSString+CalculateDigits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CalculateDigits.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,11 +257,21 @@
 			name = Tuesday_CodeChallenge;
 			sourceTree = "<group>";
 		};
+		E9AB6DDF1C9A2C1D0033F26A /* Wednesday_CodeChallenge */ = {
+			isa = PBXGroup;
+			children = (
+				E9AB6DDC1C9A2C160033F26A /* NSString+CalculateDigits.h */,
+				E9AB6DDD1C9A2C160033F26A /* NSString+CalculateDigits.m */,
+			);
+			name = Wednesday_CodeChallenge;
+			sourceTree = "<group>";
+		};
 		E9BEB4831C99C79C00F13E68 /* CODE CHALLENGES */ = {
 			isa = PBXGroup;
 			children = (
 				E99D62381C975C11009E2673 /* Monday_CodeChallenge */,
 				E9A480AB1C98DB0F001266F9 /* Tuesday_CodeChallenge */,
+				E9AB6DDF1C9A2C1D0033F26A /* Wednesday_CodeChallenge */,
 			);
 			name = "CODE CHALLENGES";
 			sourceTree = "<group>";
@@ -344,6 +357,7 @@
 				E99D62481C976B6C009E2673 /* ListNode.m in Sources */,
 				E9AB6DD51C99D1060033F26A /* Reminder.m in Sources */,
 				E99D62441C975C6C009E2673 /* StackLinkedList.m in Sources */,
+				E9AB6DDE1C9A2C160033F26A /* NSString+CalculateDigits.m in Sources */,
 				E9A480AF1C98F410001266F9 /* NSString+AnagramCompare.m in Sources */,
 				E99D61FC1C971FFC009E2673 /* AppDelegate.m in Sources */,
 				E99D62411C975C65009E2673 /* QueueLinkedList.m in Sources */,
